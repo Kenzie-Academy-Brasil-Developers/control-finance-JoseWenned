@@ -18,9 +18,64 @@
     <link rel="stylesheet" href="./src/styles/index.css" />
   </head>
   <body>
-    <main id="app"></main>
-    <script src="./src/scripts/modal.js"></script>
-    <script src="./src/scripts/valuesData.js"></script>
-    <script src="./src/scripts/index.js"></script>
+    <div id="fade" class="hide"></div>
+    <div id="modal" class="hide">
+      <div class="modal__header">
+        <h2 class="modal__header--title">Registro de valor</h2>
+
+        <button class="modal__header--button" type="submit">X</button>
+      </div>
+
+      <p class="modal__header--paragraph">Digite o valor e em seguida aperte no botão referente ao tipo do valor </p>
+    
+      <div class="container__valor">
+        <h2 class="modal__title--value">Valor</h2>
+
+        <input id="input__modal" class="modal__input" type="number" placeholder="R$ 0,00">
+      </div>
+      <div class="container__filter--type">
+        <h2 class="modal__title--type">Tipo de valor</h2>
+      
+      <div class="container__filter">
+        <button id="Prohibited" class="button__type" type="submit">Entradas</button>
+        <button id="exit" class="button__type" type="submit">Saídas</button>
+      </div>
+      </div>
+
+      <div class="container__insert">
+        <button id="cancel" class="button__cancel" type="submit">Cancelar</button>
+        <button id="insert" class="button__insert" type="submit">Inserir Valor</button>
+      </div>
+    </div>
+    <header class="container__header">
+      <h1 class="title__header"><span class="title__header--purple">Control</span> Finance</h1>
+      
+      <button id="button__header" class="button__header" type="submit">Registrar novo valor</button>
+    </header>
+
+    <main id="app">
+      <section class="container__section--filter">
+        <div class="container__section">
+          <h2 class="section__title">Resumo do valores</h2>
+        
+          <div id="container__filter--button" class="filter__button">
+            <button id="button__all" class="button__section" type="button">Todos</button>
+            <button id="button__Prohibited" class="button__section"  type="button">Entradas</button>
+            <button id="button__exit" class="button__section"  type="button">Saídas</button>
+          </div>
+        </div>
+      </section>
+
+      <div class="container__soma">
+        <h2 class="container__soma--title">Soma dos valores</h2>
+
+        <span id="total__sum" class="total">0,00</span>
+      </div>
+      
+      
+    </main>
+    <!-- <script src="./src/scripts/modal.js"></script>
+    <script src="./src/scripts/valuesData.js"></script> -->
+    <script type="module" src="./src/scripts/index.js"></script>
   </body>
 </html>
