@@ -11,6 +11,7 @@
     background-color: #F1F3F5;
 }
 
+
 .container__section--filter {
     display: flex;
     flex-direction: column;
@@ -175,9 +176,7 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        margin-left: 1.8rem;
-        margin-top: 3rem;
-
+        margin: 2rem auto;
         height: 48px;
     }
 
@@ -227,5 +226,9 @@
         margin-left: 0.8rem;
 
         width: 23.3rem;
+    }
+
+    .modal__header--button {
+        cursor: pointer;
     }
 }

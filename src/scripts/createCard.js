@@ -1,115 +1,106 @@
-import { insertCard } from "./modal.js";
-import { insertedValues, valuesCategory } from "./valuesData.js";
+import { insertedValues } from "./valuesData.js";
 
-const main = document.querySelector('#app');
- 
-const listItens = document.createElement('ul');
-listItens.classList.add('list__Itens');
-main.appendChild(listItens);
+export function reedUl(array) {
+    const ul = document.querySelector('.list__Itens');
 
+    ul.innerHTML = '';
 
-export function createCard(insertedValues){
+    array.forEach((item) => {
+        ul.append(createCard(array, item));
+    })
 
-    insertedValues.forEach((item) => {
-    
+    sum(array);
+
+}
+
+export function createCard(array, item) {
+
         const itens = document.createElement('li');
         itens.classList.add('itens__list');
-    
-        listItens.appendChild(itens);
-    
+
         const value = document.createElement('span');
-        value.textContent = `R$ ${item.value.toFixed(2).replace('.', ',')}`;
+        value.textContent = `R$ ${item.value.toFixed(2).replace(".", ",")}`;
         value.classList.add('value__item');
-    
+
         const containerDiv = document.createElement('div');
         containerDiv.classList.add('container__filter--button')
-    
+
         const filter = document.createElement('span');
         filter.classList.add('filter__item');
-        if(item.categoryID == 0){
+        if (item.categoryID == 0) {
             filter.textContent = 'Entrada';
-        }else{
+        } else {
             filter.textContent = 'Saída';
         }
-    
+
         const image = document.createElement('img');
         image.src = './src/assets/trash.png';
         image.classList.add('image__list');
+        image.setAttribute('id', item.id);
+
+        // OBS REMOVER OS VALORES E O ITEM CORRESPONDENTE!
+
         image.addEventListener('click', (event) => {
 
-            itens.remove();
+            const id = Number(event.target.id);
 
+            removeItem(array, id);
             
-        const id = event.target.dataset.id;
-        insertedValues = insertedValues.filter((element) =>{
-            return element.id !== item.id;
         });
-        
-        });
-        
+
         containerDiv.appendChild(filter);
         containerDiv.appendChild(image);
         itens.append(value, containerDiv);
-    });
+
+        return itens;
+}
+
+function removeItem(array, id){
+    const findItem = array.findIndex(element => element.id === id);
+    
+    array.splice(findItem, 1)
+    reedUl(array); 
 }
 
 // filtrando elementos nos botões!
- 
-export function handerButton() {
+
+export function handerButton(array) {
     const buttonAll = document.querySelector('#button__all');
     const buttonProhibited = document.querySelector('#button__Prohibited');
     const buttonExit = document.querySelector('#button__exit');
 
     buttonAll.addEventListener('click', () => {
-        listItens.innerHTML = ''
-        const allElement = insertedValues;
-        createCard(allElement);
-        sum('all');
+        reedUl(array);
+        sum(array);
     });
 
     buttonProhibited.addEventListener('click', () => {
-        listItens.innerHTML = ''
-        const prohibitedElement = insertedValues.filter((element) => {
+        const prohibitedElement = array.filter((element) => {
             return element.categoryID === 0;
-    });
-        createCard(prohibitedElement);
-        sum(0);
+        });
+        reedUl(prohibitedElement);
+        sum(prohibitedElement);
     });
 
     buttonExit.addEventListener('click', () => {
-        listItens.innerHTML = ''
-        const exitElement = insertedValues.filter((element) => {
+        const exitElement = array.filter((element) => {
             return element.categoryID === 1;
         });
-        createCard(exitElement);
-        sum(1);
+        reedUl(exitElement);
+        sum(exitElement);
     });
 
 }
 
-export function sum(categoryID) {
-    const value = insertedValues;
-    const total = document.querySelector('#total__sum') 
+export function sum(array) {
 
-    const filtered = value.filter((item) => {
-        return (categoryID === 'all' || item.categoryID === parseFloat(categoryID));
-    });
+    const total = document.querySelector('#total__sum')
 
-    const soma = filtered.reduce((total, item) => {
-        if(categoryID === 'all' || item.categoryID === parseFloat(categoryID)){
-            return total + item.value;
-        }else{
-            return total;
-        }
-    }, 0);
+    let sumCount = array.reduce((accumulator, element) => accumulator + element.value, 0)
 
-    total.textContent = `R$ ${soma.toFixed(2).replace('.', ',')}`
+    total.innerText = `R$ ${sumCount.toFixed(2).replace('.', ',')}`;
 
-}
-
-sum();
-;
-
+}   
 
 
 

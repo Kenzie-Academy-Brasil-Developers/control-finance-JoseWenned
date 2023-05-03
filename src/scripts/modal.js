@@ -1,4 +1,4 @@
-import { createCard, sum } from "./createCard.js";
+import { createCard, reedUl, sum } from "./createCard.js";
 import { insertedValues } from "./valuesData.js";
 
 /* Desenvolva sua lógica aqui */
@@ -14,21 +14,36 @@ const modal = document.querySelector('#modal');
 const fade = document.querySelector('#fade');
 
 // abrir e fechar modal!
+window.addEventListener('load', () => {
 
-export const toggleModal = () => {
-    modal.classList.toggle('hide');
-    fade.classList.toggle('hide');
-};
+    const toggleModal = () => {
+        modal.classList.toggle('hide');
+        fade.classList.toggle('hide');
+    };
+    
+    OpenModalButton.addEventListener('click', () => {
+        inputModal.value = '';
+        toggleModal();
+    });
+    
+    closeModalButton.addEventListener('click', () => {
+        toggleModal();
+    });
+    
+})
 
-[OpenModalButton, closeModalButton].forEach((el) => {
-    el.addEventListener('click', () => toggleModal());
-});
 
 // inserindo novos valores no input!
 
 export function insertCard() {
 
     buttonInsert.addEventListener('click', () => {
+
+        if(isNaN(inputModal.value)){
+            alert('Digite um valor numérico válido');
+            inputModal.value = '';
+            return;
+        }
 
         const newCard = {
             id: insertedValues.length + 1,
@@ -37,8 +52,9 @@ export function insertCard() {
         }
 
         insertedValues.push(newCard);
-        createCard([newCard]);
+        reedUl(insertedValues);
         sum('all');
+
     });
     
     let selectCategory = '';
@@ -59,6 +75,7 @@ export function insertCard() {
     });
    
 };
+
 
 
 
